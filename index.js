@@ -88,6 +88,22 @@ client.connect((err) => {
     res.send(result);
   });
 
+  //Make Admin
+  app.put("/makeAdmin", async (req, res) => {
+    const merchantEmail = req.body.email;
+    const query = { email: merchantEmail };
+    const updateDoc = { $set: { position: "merchant" } };
+    const result = await usersCollection.updateOne(query, updateDoc);
+    res.json(result);
+  });
+
+  app.get("/users/:email", async (req, res) => {
+    const params = req.params.email;
+    const query = { email: params };
+    const result = await usersCollection.find(query).toArray();
+    res.send(result);
+  });
+
   // client.close();
 });
 
