@@ -8,12 +8,13 @@ require("dotenv").config();
 const { MongoClient } = require("mongodb");
 const ObjectId = require("mongodb").ObjectId;
 const admin = require("firebase-admin");
+const { json } = require("express");
 
 app.get("/", (req, res) => {
   res.send("Doctor Portal Backend");
 });
 
-const serviceAccount = require("./usersJwtToken.json");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
